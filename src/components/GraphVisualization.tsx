@@ -36,8 +36,13 @@ export default function GraphVisualization({ graph, onNodeClick, selectedNodes =
   const graphRef = useRef<any>();
 
   useEffect(() => {
-    graphRef.current.d3Force('charge').strength(-10);
-    graphRef.current.d3Force('link').distance(50);
+    if (graphRef.current && graph.constructor.name === 'VCGraph') {
+      graphRef.current.d3Force('charge').strength(-100);
+      graphRef.current.d3Force('link').distance(50);
+    } else {
+      graphRef.current.d3Force('charge').strength(-1);
+      graphRef.current.d3Force('link').distance(50);
+    }
   }, []);
 
   const nodes = graph.getAllNodes().map((node: any) => ({

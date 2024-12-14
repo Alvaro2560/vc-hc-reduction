@@ -55,10 +55,10 @@ export default function GraphReduction() {
 
   const performReduction = () => {
     if (k === 0) {
-      alert('Please set a value for K before performing the reduction.');
+      alert('Please set the value of K before performing the reduction.');
       return;
     } else if (k > vcGraph.getAllNodes().length) {
-      alert('K cannot be greater than the number of nodes in the graph.');
+      alert('The value of K cannot be greater than the number of nodes in the graph.');
       return;
     }
     const handler = new ReductionHandler(vcGraph);

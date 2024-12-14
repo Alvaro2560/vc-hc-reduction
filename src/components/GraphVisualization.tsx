@@ -39,6 +39,7 @@ export default function GraphVisualization({ graph, onNodeClick, selectedNodes =
     if (graphRef.current && graph.constructor.name === 'VCGraph') {
       graphRef.current.d3Force('charge').strength(-10);
       graphRef.current.d3Force('link').distance(50);
+      graphRef.current.freeze();
     } else {
       graphRef.current.d3Force('charge').strength(-50);
       graphRef.current.d3Force('link').distance(50);

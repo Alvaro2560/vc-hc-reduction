@@ -54,6 +54,11 @@ export default function GraphReduction() {
   }
 
   const performReduction = () => {
+    if (k === 0) {
+      alert('Please set a value for K before performing the reduction.');
+    } else if (k > vcGraph.getAllNodes().length) {
+      alert('K cannot be greater than the number of nodes in the graph.');
+    }
     const handler = new ReductionHandler(vcGraph);
     const reducedHCGraph = handler.performReduction();
     setHCGraph(reducedHCGraph);

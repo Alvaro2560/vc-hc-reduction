@@ -37,7 +37,7 @@ export default function GraphVisualization({ graph, onNodeClick, selectedNodes =
 
   useEffect(() => {
     if (graphRef.current && graph.constructor.name === 'VCGraph') {
-      graphRef.current.d3Force('charge').strength(-50);
+      graphRef.current.d3Force('charge').strength(-25);
       graphRef.current.d3Force('link').distance(50);
     } else {
       graphRef.current.d3Force('charge').strength(-100);

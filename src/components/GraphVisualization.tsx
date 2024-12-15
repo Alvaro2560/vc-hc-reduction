@@ -41,7 +41,7 @@ export default function GraphVisualization({ graph, onNodeClick, selectedNodes =
       graphRef.current.d3Force('link').distance(50);
       graphRef.current.freeze();
     } else {
-      graphRef.current.d3Force('charge').strength(-10);
+      graphRef.current.d3Force('charge').strength(-5);
       graphRef.current.d3Force('link').distance(100);
     }
   }, []);

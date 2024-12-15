@@ -18,6 +18,7 @@ import { Node } from './node';
  */
 export abstract class Graph {
   private readonly NODES: Map<string, Node> = new Map<string, Node>();
+  protected isVCGraph: boolean = false;
 
   /**
    * @description Adds a node to the graph.

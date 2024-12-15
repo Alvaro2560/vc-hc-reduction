@@ -31,6 +31,7 @@ export class VCGraph extends Graph {
         this.addNode(node);
       }
     }
+    this.isVCGraph = true;
   }
 
   /**

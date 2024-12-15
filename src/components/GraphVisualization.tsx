@@ -42,7 +42,7 @@ export default function GraphVisualization({ graph, onNodeClick, selectedNodes =
       graphRef.current.freeze();
     } else {
       graphRef.current.d3Force('charge').strength(-15);
-      graphRef.current.d3Force('link').distance(100);
+      graphRef.current.d3Force('link').distance(200);
     }
   }, []);
 

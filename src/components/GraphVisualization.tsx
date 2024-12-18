@@ -23,6 +23,7 @@ import ForceGraph2D from 'react-force-graph-3d';
  */
 interface GraphVisualizationProps {
   graph: any
+  colorfulComponents?: boolean
   onNodeClick?: (nodeId: string) => void
   selectedNodes?: string[]
 }
@@ -32,7 +33,7 @@ interface GraphVisualizationProps {
  * @param {GraphVisualizationProps} props - The component's properties.
  * @returns The GraphVisualization component.
  */
-export default function GraphVisualization({ graph, onNodeClick, selectedNodes = [] }: GraphVisualizationProps) {
+export default function GraphVisualization({ graph, colorfulComponents, onNodeClick, selectedNodes = [] }: GraphVisualizationProps) {
   const graphRef = useRef<any>();
 
   useEffect(() => {
@@ -45,7 +46,7 @@ export default function GraphVisualization({ graph, onNodeClick, selectedNodes =
         graphRef.current.d3Force('link').distance(50);
       }
     }
-  }, [graph]);
+  }, []);
 
   const nodes = graph.getAllNodes().map((node: any) => ({
     id: node.getId(),
@@ -59,21 +60,27 @@ export default function GraphVisualization({ graph, onNodeClick, selectedNodes =
     }))
   );
 
+  const getNodeColor = (node: any) => {
+    if (selectedNodes.includes(node.id)) {
+      return '#ef4444';
+    } else if (node.id.startsWith('a')) {
+      return '#f59e0b';
+    } else if (/^\d+$/.test(node.id)) {
+      return '#4338ca';
+    } else if (colorfulComponents && node.isOrigin()) {
+      return '#10b981';
+    } else if (colorfulComponents && !node.isOrigin()) {
+      return '#c9351e';
+    }
+    return '#9ca3af';
+  }
+
   return (
     <ForceGraph2D
       ref={graphRef}
       graphData={{ nodes, links }}
       nodeLabel="name"
-      nodeColor={(node: any) => {
-        if (selectedNodes.includes(node.id)) {
-          return '#ef4444';
-        } else if (node.id.startsWith('a')) {
-          return '#10b981';
-        } else if (/^\d+$/.test(node.id)) {
-          return '#4338ca';
-        }
-        return '#9ca3af';
-      }}
+      nodeColor={getNodeColor}
       linkColor={() => 'black'}
       linkWidth={1}
       width={800}

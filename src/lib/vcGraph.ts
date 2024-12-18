@@ -72,7 +72,7 @@ export class VCGraph extends Graph {
         let coverTestingComponent: Node[] = [];
         // Creating the origin-destiny-number nodes.
         for (let i = 0; i < 6; ++i) {
-          let componentNode = new Node(`${node.getId()}${successor.getId()}${i + 1}`);
+          let componentNode = new Node(`${node.getId()}${successor.getId()}${i + 1}`, [], true);
           coverTestingComponent.push(componentNode);
         }
         // Creating the destiny-origin-number nodes.

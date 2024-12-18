@@ -15,6 +15,7 @@ import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { Switch } from '@/components/ui/switch';
 import { VCGraph } from '../lib/vcGraph';
 import { ReductionHandler } from '../lib/reductionHandler';
 import GraphVisualization from './GraphVisualization';
@@ -29,6 +30,7 @@ export default function GraphReduction() {
   const [nodeCount, setNodeCount] = useState(0);
   const [k, setK] = useState(0);
   const [selectedNodes, setSelectedNodes] = useState<string[]>([]);
+  const [colorfulComponents, setColorfulComponents] = useState(false);
 
   const addNode = () => {
     const newNodeId = `${nodeCount + 1}`;
@@ -71,6 +73,10 @@ export default function GraphReduction() {
     setVCGraph(new VCGraph(newK, vcGraph.getAllNodes()));
   }
 
+  const toggleColorfulComponents = () => {
+    setColorfulComponents(!colorfulComponents);
+  }
+
   return (
     <div className="space-y-4 w-full">
       <div className="grid grid-cols-1 md:grid-cols-6 px-4">
@@ -90,6 +96,12 @@ export default function GraphReduction() {
             <Button onClick={addNode}>Add Node</Button>
             <Button onClick={createEdge} disabled={selectedNodes.length !== 2}>Create Edge</Button>
             <Button onClick={performReduction}>Perform Reduction</Button>
+            <Switch
+              id="colorful-mode"
+              checked={colorfulComponents}
+              onCheckedChange={toggleColorfulComponents}
+            />
+            <Label htmlFor="colorful-mode">Colorful Components</Label>
           </div>
         </div>
       </div>
@@ -104,7 +116,7 @@ export default function GraphReduction() {
         </div>
         <div className="flex flex-col items-center mt-8">
           <h2 className="text-xl font-semibold mb-2">Hamiltonian Circuit Graph</h2>
-          {hcGraph && <GraphVisualization graph={hcGraph} />}
+          {hcGraph && <GraphVisualization graph={{hcGraph, colorfulComponents}} />}
         </div>
       </div>
     </div>

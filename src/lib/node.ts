@@ -19,7 +19,7 @@ export class Node {
    * @description Creates an instance of a node.
    * @param {string} ID - The node's identifier.
    */
-  constructor(private readonly ID: string, private readonly SUCCESSORS: Node[] = []) {}
+  constructor(private readonly ID: string, private readonly SUCCESSORS: Node[] = [], private isNodeOrigin: boolean = false) {}
 
   /**
    * @description Adds a successor to the node.
@@ -47,5 +47,12 @@ export class Node {
    */
   public getSuccessors(): readonly Node[] {
     return this.SUCCESSORS;
+  }
+
+  /**
+   * 
+   */
+  public isOrigin(): boolean {
+    return this.isNodeOrigin;
   }
 }

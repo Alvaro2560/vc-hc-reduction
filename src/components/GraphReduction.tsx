@@ -116,7 +116,7 @@ export default function GraphReduction() {
         </div>
         <div className="flex flex-col items-center mt-8">
           <h2 className="text-xl font-semibold mb-2">Hamiltonian Circuit Graph</h2>
-          {hcGraph && <GraphVisualization graph={{hcGraph, colorfulComponents}} />}
+          {hcGraph && <GraphVisualization graph={hcGraph} colorfulComponents={colorfulComponents} />}
         </div>
       </div>
     </div>

@@ -82,4 +82,12 @@ export abstract class Graph {
   public getAllNodes(): Node[] {
     return [...this.NODES.values()];
   }
+
+  /**
+   * @description Checks if the graph is a vertex cover graph.
+   * @returns {boolean} Whether the graph is a vertex cover graph or not.
+   */
+  public isVC(): boolean {
+    return this.isVCGraph;
+  }
 }

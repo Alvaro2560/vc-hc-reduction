@@ -13,6 +13,7 @@
 
 import { useEffect, useRef } from 'react';
 import ForceGraph2D from 'react-force-graph-3d';
+import { Node } from '@/lib/node';
 
 /**
  * @description Props for the GraphVisualization component.
@@ -38,7 +39,7 @@ export default function GraphVisualization({ graph, colorfulComponents, onNodeCl
 
   useEffect(() => {
     if (graphRef.current) {
-      if (graph.isVCGraph) {
+      if (graph.isVC()) {
         graphRef.current.d3Force('charge').strength(-10);
         graphRef.current.d3Force('link').distance(50);
       } else {
@@ -48,13 +49,14 @@ export default function GraphVisualization({ graph, colorfulComponents, onNodeCl
     }
   }, []);
 
-  const nodes = graph.getAllNodes().map((node: any) => ({
+  const nodes = graph.getAllNodes().map((node: Node) => ({
     id: node.getId(),
     name: node.getId(),
+    isOrigin: node.isOrigin()
   }));
 
-  const links = graph.getAllNodes().flatMap((node: any) =>
-    node.getSuccessors().map((successor: any) => ({
+  const links = graph.getAllNodes().flatMap((node: Node) =>
+    node.getSuccessors().map((successor: Node) => ({
       source: node.getId(),
       target: successor.getId(),
     }))
@@ -65,12 +67,14 @@ export default function GraphVisualization({ graph, colorfulComponents, onNodeCl
       return '#ef4444';
     } else if (node.id.startsWith('a')) {
       return '#f59e0b';
+    } else if (colorfulComponents) {
+      if (nodes.find((n: any) => n.id === node.id)?.isOrigin) {
+        return '#10b981';
+      } else {
+        return '#c9351e';
+      }
     } else if (/^\d+$/.test(node.id)) {
       return '#4338ca';
-    } else if (colorfulComponents && node.isOrigin()) {
-      return '#10b981';
-    } else if (colorfulComponents && !node.isOrigin()) {
-      return '#c9351e';
     }
     return '#9ca3af';
   }
@@ -80,7 +84,7 @@ export default function GraphVisualization({ graph, colorfulComponents, onNodeCl
       ref={graphRef}
       graphData={{ nodes, links }}
       nodeLabel="name"
-      nodeColor={getNodeColor}
+      nodeColor={(node: any) => getNodeColor(node)}
       linkColor={() => 'black'}
       linkWidth={1}
       width={800}
